@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Modelo 3D académico de recolección de agua lluvia desde techos para vivienda.">
+  <title>Recolector de agua lluvia | Modelo 3D</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PROYECTO ACADÉMICO · ARQUITECTURA Y SOSTENIBILIDAD</p>
+      <h1>Recolector de agua lluvia para vivienda</h1>
+      <p class="subtitle">Diseño de canales en cubierta, bajantes y almacenamiento</p>
+    </div>
+    <span class="status" id="status">Simulación detenida</span>
+  </header>
+
+  <main class="layout">
+    <section class="viewer-card">
+      <div class="viewer-heading">
+        <div>
+          <h2>Modelo tridimensional</h2>
+          <p>Arrastra para girar · rueda para acercar o alejar · clic en las piezas para identificarlas</p>
+        </div>
+        <div class="view-actions">
+          <button id="homeView" class="button secondary">Vista inicial</button>
+          <button id="labelsToggle" class="button secondary">Ocultar etiquetas</button>
+        </div>
+      </div>
+      <div id="scene" aria-label="Modelo 3D interactivo de vivienda y sistema recolector de agua lluvia"></div>
+      <div class="legend">
+        <span><i class="dot roof"></i> Cubierta</span>
+        <span><i class="dot gutter"></i> Canal</span>
+        <span><i class="dot pipe"></i> Bajante</span>
+        <span><i class="dot water"></i> Agua</span>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <section class="control-group">
+        <h2>Controles de simulación</h2>
+        <div class="button-row">
+          <button id="startBtn" class="button primary">▶ Iniciar lluvia</button>
+          <button id="pauseBtn" class="button secondary">Ⅱ Pausar</button>
+          <button id="resetBtn" class="button secondary">↻ Reiniciar</button>
+        </div>
+        <label for="rain">Intensidad de lluvia <strong id="rainValue">60 mm/h</strong></label>
+        <input id="rain" type="range" min="10" max="150" step="5" value="60">
+        <label for="roofArea">Área de cubierta <strong id="areaValue">80 m²</strong></label>
+        <input id="roofArea" type="range" min="30" max="160" step="5" value="80">
+        <label for="tankSize">Capacidad del tanque <strong id="tankValue">1.000 L</strong></label>
+        <input id="tankSize" type="range" min="300" max="3000" step="100" value="1000">
+      </section>
+
+      <section class="control-group">
+        <h2>Resultados estimados</h2>
+        <div class="metric-grid">
+          <article class="metric"><span>Caudal captado</span><strong id="flow">0,00 L/min</strong></article>
+          <article class="metric"><span>Agua acumulada</span><strong id="volume">0 L</strong></article>
+          <article class="metric"><span>Llenado del tanque</span><strong id="fillPercent">0 %</strong></article>
+          <article class="metric"><span>Tiempo para llenar</span><strong id="fillTime">—</strong></article>
+        </div>
+        <div class="tank-progress"><div id="tankProgress"></div></div>
+        <p class="small-note" id="tankNote">El tanque está vacío.</p>
+      </section>
+
+      <section class="control-group">
+        <h2>Elemento seleccionado</h2>
+        <div class="selected-box">
+          <strong id="partName">Sistema completo</strong>
+          <p id="partDescription">El agua cae sobre la cubierta, es conducida por los canales hacia las bajantes, pasa por un filtro y llega al tanque de almacenamiento.</p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <section class="lower-grid">
+    <article class="info-card">
+      <h2>Recorrido del agua</h2>
+      <ol class="steps">
+        <li><b>Captación:</b> la cubierta recibe la precipitación.</li>
+        <li><b>Conducción:</b> los canales ubicados en los bordes recogen el agua.</li>
+        <li><b>Bajada:</b> las tuberías verticales llevan el agua hacia el nivel del suelo.</li>
+        <li><b>Filtrado:</b> una rejilla o filtro retiene hojas y residuos gruesos.</li>
+        <li><b>Almacenamiento:</b> el agua ingresa al tanque para usos no potables.</li>
+      </ol>
+    </article>
+    <article class="info-card">
+      <h2>Cálculo académico simplificado</h2>
+      <p class="equation">Q = C × I × A</p>
+      <p><b>Q:</b> caudal estimado · <b>C:</b> coeficiente de escorrentía · <b>I:</b> intensidad de lluvia · <b>A:</b> área proyectada de cubierta.</p>
+      <p class="small-note">Se utiliza C = 0,85 como valor demostrativo. La conversión mostrada es: Q (L/min) = C × I (mm/h) × A (m²) ÷ 60.</p>
+      <p class="warning">Este simulador es educativo. No reemplaza el cálculo hidráulico, las normas locales, el diseño de reboses ni la revisión de un profesional.</p>
+    </article>
+    <article class="info-card">
+      <h2>Recomendaciones de diseño</h2>
+      <ul>
+        <li>Dar pendiente continua al canal hacia la bajante.</li>
+        <li>Instalar rejilla para hojas y un dispositivo de descarte de primeras aguas.</li>
+        <li>Prever rebose, tapa y acceso para limpieza del tanque.</li>
+        <li>Separar la red de agua lluvia de la red de agua potable.</li>
+        <li>Verificar materiales resistentes a corrosión y radiación solar.</li>
+      </ul>
+    </article>
+  </section>
+
+  <footer>Modelo demostrativo · Puedes modificar los parámetros y publicar este proyecto en GitHub Pages.</footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
